@@ -1,0 +1,103 @@
+{% comment %} {% extends 'base_generic.html' %} {% endcomment %}
+{% load static %}
+
+{% block title %}
+<title>Home - Blog de L'ISET</title>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+<style>
+  .navbar {
+    background-color: #e9ecef; /* Light gray color for the navbar */
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #ccc;
+  }
+
+  .navbar h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #333; /* Darker text for better contrast on gray */
+  }
+
+  .btn-postuler {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .btn-postuler:hover {
+    background-color: #0056b3;
+  }
+
+  .card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 20px;
+    padding: 20px;
+  }
+
+  .card {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+
+  .card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .card-content {
+    padding: 15px;
+  }
+
+  .card-actions {
+    padding: 10px;
+    text-align: right;
+    border-top: 1px solid #eee;
+  }
+
+  .card-actions a {
+    margin-left: 10px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="navbar">
+  <h1>Welcome to the Blog of ISET</h1>
+  <a href="{% url 'post_new' %}" class="btn-postuler">Create Post</a>
+</div>
+
+<div class="card-container">
+  {% for post in posts %}
+  <div class="card">
+    {% if post.image %}
+    <img src="{{ post.image.url }}" alt="{{ post.title }}">
+    {% endif %}
+    <div class="card-content">
+      <h3>{{ post.title }}</h3>
+      <p>Updated: {{ post.updated_on|date:"d M Y" }}</p>
+    </div>
+    <div class="card-actions">
+      <a href="{% url 'post_detail' pk=post.pk %}">Details</a>
+      <a href="{% url 'post_edit' pk=post.pk %}">Edit</a>
+      <a href="{% url 'post_delete' pk=post.pk %}">Delete</a>
+    </div>
+  </div>
+  {% empty %}
+  <p>No posts available.</p>
+  {% endfor %}
+</div>
+{% endblock %}

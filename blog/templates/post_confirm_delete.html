@@ -1,0 +1,11 @@
+<!-- blog/templates/blog/post_confirm_delete.html -->
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <h1>Êtes-vous sûr de vouloir supprimer "{{ object.title }}" ?</h1>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirmer la suppression</button>
+    <a href="{% url 'post_list' %}">Annuler</a>
+  </form>
+{% endblock %}

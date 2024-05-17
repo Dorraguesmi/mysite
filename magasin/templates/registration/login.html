@@ -1,0 +1,90 @@
+{% comment %} {% extends "magasin/base.html" %} {% endcomment %}
+
+{% block content %}
+<style>
+  /* Styles globaux pour la page */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+  }
+
+  /* Style du formulaire */
+  form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 20px auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  td {
+    padding: 8px;
+  }
+
+  input, button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+  }
+
+  button {
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #4cae4c;
+  }
+
+  .alert {
+    color: #b94a48;
+    background-color: #f2dede;
+    border-color: #eed3d7;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 4px;
+  }
+</style>
+
+<h2>Se connecter</h2>
+<div>
+  <form method="post">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+      {% for error in form.non_field_errors %}
+        <p class="alert alert-danger">{{ error }}</p>
+      {% endfor %}
+    {% endif %}
+    <table>
+      {% for field in form %}
+        <tr>
+          <td>{{ field.label_tag }}</td>
+          <td>{{ field }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+    <button type="submit">Se connecter</button>
+  </form>
+</div>
+<div>
+  <small>
+    Pas encore inscrit.e?
+    <a href="{% url 'register' %}">S'inscrire</a>
+    <br />
+    Mot de passe oublié ?
+    <a href="#">Renouveler mon mot de passe</a>
+  </small>
+</div>
+{% endblock %}

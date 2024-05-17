@@ -1,0 +1,57 @@
+{% comment %} {% extends 'base_generic.html' %}  {% endcomment %}
+{% block styles %}
+<style>
+  .card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 20px;
+    padding: 20px;
+  }
+  .card {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  .card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  .card-content {
+    padding: 15px;
+  }
+  .card-actions {
+    padding: 10px;
+    text-align: right;
+    border-top: 1px solid #eee;
+  }
+  .card-actions a {
+    margin-left: 10px;
+  }
+</style>
+{% endblock %} {% block content %}
+<h1>Liste des Posts</h1>
+<a href="{% url 'post_new' %}">Créer un nouveau post</a>
+
+<div class="card-container">
+  {% for post in object_list %}
+  <div class="card">
+    {% if post.image %}
+    <img src="{{ post.image.url }}" alt="{{ post.title }}" />
+    {% endif %}
+    <div class="card-content">
+      <h2>{{ post.title }}</h2>
+    </div>
+    <div class="card-actions">
+      <a href="{% url 'post_detail' post.pk %}">Détail</a>
+      <a href="{% url 'post_edit' post.pk %}">Éditer</a>
+      <a href="{% url 'post_delete' post.pk %}">Supprimer</a>
+    </div>
+  </div>
+  {% empty %}
+  <p>Aucun post disponible.</p>
+  {% endfor %}
+</div>
+{% endblock %}

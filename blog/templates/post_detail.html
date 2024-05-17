@@ -1,0 +1,16 @@
+
+{% comment %} {% extends 'base_generic.html' %}  {% endcomment %}
+{% block content %}
+<h1>{{ post.title }}</h1>
+<p>Par {{ post.author }}</p>
+<p>Publié le {{ post.created_on }}</p>
+{% if post.image %}
+<img src="{{ post.image.url }}" alt="Image for {{ post.title }}" />
+{% else %}
+<p>No image available.</p>
+{% endif %}
+<p>{{ post.content }}</p>
+<a href="{% url 'post_edit' post.pk %}">Éditer ce post</a> |
+<a href="{% url 'post_delete' post.pk %}">Supprimer ce post</a> |
+<a href="{% url 'post_list' %}">Retour à la liste des posts</a>
+{% endblock %}
